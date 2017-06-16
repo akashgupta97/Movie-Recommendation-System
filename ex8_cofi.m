@@ -150,3 +150,25 @@ fprintf('Recommender system learning completed.\n');
 fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
 
+
+p = X * Theta';
+my_predictions = p(:,1) + Ymean;
+
+movieList = loadMovieList();
+
+[r, ix] = sort(my_predictions, 'descend');
+fprintf('\nTop recommendations for you:\n');
+for i=1:10
+    j = ix(i);
+    fprintf('Predicting rating %.1f for movie %s\n', my_predictions(j), ...
+            movieList{j});
+end
+
+fprintf('\n\nOriginal ratings provided:\n');
+for i = 1:length(my_ratings)
+    if my_ratings(i) > 0 
+        fprintf('Rated %d for %s\n', my_ratings(i), ...
+                 movieList{i});
+    end
+end
+
